@@ -72,7 +72,7 @@ void FDlgSystemEditorModule::StartupModule()
 #endif // NY_ENGINE_VERSION >= 424
 
 	UE_LOG(LogDlgSystemEditor, Log, TEXT("DlgSystemEditorModule: StartupModule"));
-	OnPostEngineInitHandle = FCoreDelegates::OnPostEngineInit.AddRaw(this, &Self::HandleOnPostEngineInit);
+	OnPostEngineInitHandle = FCoreDelegates::GetOnPostEngineInit().AddRaw(this, &Self::HandleOnPostEngineInit);
 	OnBeginPIEHandle = FEditorDelegates::BeginPIE.AddRaw(this, &Self::HandleOnBeginPIE);
 	OnPostPIEStartedHandle = FEditorDelegates::PostPIEStarted.AddRaw(this, &Self::HandleOnPostPIEStarted);
 	OnEndPIEHandle = FEditorDelegates::EndPIE.AddRaw(this, &Self::HandleOnEndPIEHandle);
@@ -287,7 +287,7 @@ void FDlgSystemEditorModule::ShutdownModule()
 	}
 	if (OnPostEngineInitHandle.IsValid())
 	{
-		FCoreDelegates::OnPostEngineInit.Remove(OnPostEngineInitHandle);
+		FCoreDelegates::GetOnPostEngineInit().Remove(OnPostEngineInitHandle);
 	}
 
 	UE_LOG(LogDlgSystemEditor, Log, TEXT("DlgSystemEditorModule: ShutdownModule"));

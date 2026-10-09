@@ -84,7 +84,7 @@ private: // UStruct -> JSON
 	 * @return False if any properties failed to write
 	 */
 	bool UStructToJsonAttributes(const UStruct* StructDefinition, const void* const ContainerPtr,
-								 TMap<FString, TSharedPtr<FJsonValue>>& OutJsonAttributes);
+								 TMap<FJsonObject::FStringType, TSharedPtr<FJsonValue>>& OutJsonAttributes);
 
 	/**
 	 * Converts from a UStruct to a JSON Object

@@ -427,7 +427,7 @@ TSharedPtr<FJsonValue> FDlgJsonWriter::PropertyToJsonValue(const FProperty* Prop
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-bool FDlgJsonWriter::UStructToJsonAttributes(const UStruct* StructDefinition, const void* const ContainerPtr, TMap<FString, TSharedPtr<FJsonValue>>& OutJsonAttributes)
+bool FDlgJsonWriter::UStructToJsonAttributes(const UStruct* StructDefinition, const void* const ContainerPtr, TMap<FJsonObject::FStringType, TSharedPtr<FJsonValue>>& OutJsonAttributes)
 {
 	if (StructDefinition == nullptr || ContainerPtr == nullptr)
 	{
@@ -557,7 +557,7 @@ bool FDlgJsonWriter::UStructToJsonAttributes(const UStruct* StructDefinition, co
 		// set the value on the output object
 		// NOTE default JSON writer makes the first letter to be lowercase, we do not want that ;) FJsonObjectConverter::StandardizeCase
 		const FString VariableName = Property->GetName();
-		OutJsonAttributes.Add(VariableName, JsonValue);
+		OutJsonAttributes.Add(FJsonObject::FStringType(VariableName), JsonValue);
 	}
 
 	return true;

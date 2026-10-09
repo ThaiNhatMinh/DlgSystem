@@ -378,7 +378,7 @@ bool FDlgJsonParser::ConvertScalarJsonValueToProperty(const TSharedPtr<FJsonValu
 
 					// NOTE if key is a FStructProperty no need to Import the text item here as it will do that below in UStruct
 					// Add key
-					const TSharedPtr<FJsonValueString> KeyAsString = MakeShared<FJsonValueString>(Entry.Key);
+					const TSharedPtr<FJsonValueString> KeyAsString = MakeShared<FJsonValueString>(*Entry.Key);
 					const bool bKeySuccess = JsonValueToProperty(KeyAsString, Helper.GetKeyProperty(), ContainerPtr, Helper.GetKeyPtr(NewIndex));
 
 					// Add value
@@ -752,7 +752,7 @@ bool FDlgJsonParser::JsonValueToProperty(const TSharedPtr<FJsonValue>& JsonValue
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-bool FDlgJsonParser::JsonAttributesToUStruct(const TMap<FString, TSharedPtr<FJsonValue>>& JsonAttributes,
+bool FDlgJsonParser::JsonAttributesToUStruct(const TMap<FJsonObject::FStringType, TSharedPtr<FJsonValue>>& JsonAttributes,
 											const UStruct* StructDefinition, void* ContainerPtr)
 {
 	check(StructDefinition);
@@ -822,7 +822,7 @@ bool FDlgJsonParser::JsonAttributesToUStruct(const TMap<FString, TSharedPtr<FJso
 		{
 			// use case insensitive search since FName may change case strangely on us
 			// TODO does this break on struct/classes with properties of similar name?
-			if (PropertyName.Equals(Elem.Key, ESearchCase::IgnoreCase))
+			if (PropertyName.Equals(*Elem.Key, ESearchCase::IgnoreCase))
 			{
 				JsonValue = Elem.Value;
 				break;

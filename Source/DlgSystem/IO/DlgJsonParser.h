@@ -73,7 +73,7 @@ private: // JSON -> UStruct
 	 *
 	 * @return False if any properties matched but failed to deserialize
 	 */
-	bool JsonAttributesToUStruct(const TMap<FString, TSharedPtr<FJsonValue>>& JsonAttributes,
+	bool JsonAttributesToUStruct(const TMap<FJsonObject::FStringType, TSharedPtr<FJsonValue>>& JsonAttributes,
 								const UStruct* StructDefinition, void* ContainerPtr);
 
 	/**
